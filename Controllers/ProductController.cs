@@ -209,4 +209,26 @@ public class ProductController : ControllerBase
             Data = productQuantity
         });
     }
+
+    [HttpPut("AddQuantity")]
+    public ActionResult AddStockQuantity(ProductQuantity productQuantity)
+    {
+        Product productStock = Product.AddStockQuantity(_db, productQuantity);
+
+        Transaction transaction = new Transaction
+        {
+            ProductId = productStock.Id,
+            TransactionTypeId = 2,
+            Quantity = productQuantity.Quantity
+        };
+
+        Transaction.Create(_db, transaction);
+
+        return Ok(new Response
+        {
+            Code = 200,
+            Message = "Success",
+            Data = productQuantity
+        });
+    }
 }
