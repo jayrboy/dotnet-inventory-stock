@@ -1,4 +1,5 @@
 using inventoryProject.Data;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace inventoryProject.Models
@@ -24,7 +25,13 @@ namespace inventoryProject.Models
         //Get All
         public static List<Transaction> GetAll(InventoryContext db)
         {
-            List<Transaction> result = db.Transactions.Where(q => q.IsDeleted != true).ToList();
+            // List<Transaction> result = db.Transactions.Where(q => q.IsDeleted != true).ToList();
+            List<Transaction> result = db.Transactions
+                               .Include(t => t.Product) // เพิ่ม Include เพื่อให้ EF Core อ่านข้อมูล Product ที่เกี่ยวข้อง
+                               .Include(t => t.TransactionType) // เพิ่ม Include เพื่อให้ EF Core อ่านข้อมูล TransactionType ที่เกี่ยวข้อง
+                               .Where(q => q.IsDeleted != true)
+                               .ToList();
+
             return result;
         }
     }

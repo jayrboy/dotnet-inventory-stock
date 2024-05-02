@@ -1,7 +1,9 @@
+using inventoryProject.Controllers;
 using inventoryProject.Data;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using static inventoryProject.Controllers.ProductController;
 
 namespace inventoryProject.Models
 {
@@ -9,6 +11,7 @@ namespace inventoryProject.Models
     {
 
     }
+
 
     [MetadataType(typeof(ProductMetadata))]
     public partial class Product
@@ -67,6 +70,19 @@ namespace inventoryProject.Models
 
             db.SaveChanges();
             return product;
+        }
+
+
+        //Update Quantity Action
+        public static Product UpdateStockQuantity(InventoryContext db, ProductQuantity product)
+        {
+            Product oldProduct = GetById(db, product.Id);
+
+            oldProduct.StockQuantity -= product.Quantity;
+
+            db.SaveChanges();
+
+            return oldProduct;
         }
     }
 

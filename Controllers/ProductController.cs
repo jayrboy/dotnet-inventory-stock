@@ -55,6 +55,12 @@ public class ProductController : ControllerBase
         public int? Price { get; set; }
     }
 
+    public class ProductQuantity
+    {
+        public int Id { get; set; }
+        public int? Quantity { get; set; }
+    }
+
     [HttpPost(Name = "CreateProduct")]
     public ActionResult CreateProduct(ProductCreate productCreate)
     {
@@ -161,5 +167,46 @@ public class ProductController : ControllerBase
     {
         Product product = Product.Delete(_db, id);
         return Ok(product);
+    }
+
+
+    /// <summary>
+    /// Update Stock Quantity
+    /// </summary>
+    /// <remarks>
+    /// Sample request:
+    /// ```json
+    /// PUT /Product/UpdateQuantity
+    /// {
+    ///     "id": 1,
+    ///     "stockQuantity": 10,
+    /// }
+    /// ```
+    /// </remarks>
+    /// <param name="product"></param>
+    /// <returns></returns>
+    /// <response code="200">Success</response>
+    /// <response code="400">Bad Request</response>
+    /// <response code="500">Internal Server Error</response>
+    [HttpPut("UpdateQuantity")]
+    public ActionResult UpdateStockQuantity(ProductQuantity productQuantity)
+    {
+        Product productStock = Product.UpdateStockQuantity(_db, productQuantity);
+
+        Transaction transaction = new Transaction
+        {
+            ProductId = productStock.Id,
+            TransactionTypeId = 3,
+            Quantity = productQuantity.Quantity
+        };
+
+        Transaction.Create(_db, transaction);
+
+        return Ok(new Response
+        {
+            Code = 200,
+            Message = "Success",
+            Data = productQuantity
+        });
     }
 }
