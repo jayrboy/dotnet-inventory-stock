@@ -1,6 +1,7 @@
 using inventoryProject.Data;
 using inventoryProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using myFirstProject.Models;
 
 namespace inventoryProject.Controllers;
 
@@ -40,7 +41,24 @@ public class CategoryController : ControllerBase
     [HttpGet(Name = "ViewCategory")]
     public ActionResult ViewCategory()
     {
-        List<Product> products = Product.GetAll(_db);
-        return Ok(products);
+        List<Category> categories = Category.GetAll(_db).ToList();
+        return Ok(new Response
+        {
+            Code = 200,
+            Message = "Success",
+            Data = categories
+        });
+    }
+
+    [HttpGet("{id}", Name = "GetIdCategory")]
+    public ActionResult GetIdCategory(int id)
+    {
+        Category categories = Category.GetById(_db, id);
+        return Ok(new Response
+        {
+            Code = 200,
+            Message = "Success",
+            Data = categories
+        });
     }
 }

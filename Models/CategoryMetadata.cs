@@ -23,10 +23,17 @@ namespace inventoryProject.Models
         }
 
         //Get All
-        public static List<Product> GetAll(InventoryContext db)
+        public static List<Category> GetAll(InventoryContext db)
         {
-            List<Product> result = db.Products.Where(Queryable => Queryable.IsDeleted != true).ToList();
+            List<Category> result = db.Categories.Where(Queryable => Queryable.IsDeleted != true).ToList();
             return result;
+        }
+
+        //Get ID Action
+        public static Category GetById(InventoryContext db, int id)
+        {
+            Category? result = db.Categories.Where(q => q.Id == id && q.IsDeleted != true).FirstOrDefault();
+            return result ?? new Category();
         }
     }
 }

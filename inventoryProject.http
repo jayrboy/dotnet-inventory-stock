@@ -1,6 +1,6 @@
-@inventoryProject_HostAddress = http://localhost:5062
+@inventoryProject_HostAddress = http://localhost:8000
 
 GET {{inventoryProject_HostAddress}}/weatherforecast/
 Accept: application/json
 
-###
+### 
