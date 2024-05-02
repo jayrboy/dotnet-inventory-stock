@@ -96,6 +96,18 @@ namespace inventoryProject.Models
 
             return oldProduct;
         }
+
+        //Sale Quantity Action
+        public static Product SaleQuantity(InventoryContext db, ProductQuantity product)
+        {
+            Product oldProduct = GetById(db, product.Id);
+
+            oldProduct.StockQuantity -= product.Quantity;
+
+            db.SaveChanges();
+
+            return oldProduct;
+        }
     }
 
 }
