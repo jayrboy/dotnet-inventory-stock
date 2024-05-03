@@ -81,9 +81,10 @@ public class ProductController : ControllerBase
     [HttpGet(Name = "GetAllProduct")]
     public ActionResult GetAllProduct()
     {
-        List<Product> products = Product.GetAll(_db).OrderBy(q => q.Id).ToList(); // ตามลำดับ
         // List<Product> products = Product.GetAll(_db).OrderBy(q => q.Price).ToList(); // น้อย -> มาก
         // List<Product> products = Product.GetAll(_db).OrderByDescending(q => q.Price).ToList(); // มาก -> น้อย
+        List<Product> products = Product.GetAll(_db).OrderBy(q => q.Id).ToList(); // ตามลำดับ
+        
         return Ok(new Response
         {
             Code = 200,

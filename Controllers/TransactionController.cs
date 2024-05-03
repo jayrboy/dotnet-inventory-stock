@@ -1,6 +1,7 @@
 using inventoryProject.Data;
 using inventoryProject.Models;
 using Microsoft.AspNetCore.Mvc;
+using myFirstProject.Models;
 
 namespace inventoryProject.Controllers;
 
@@ -59,4 +60,5 @@ public class TransactionController : ControllerBase
         List<Transaction> transaction = Transaction.GetAll(_db);
         return Ok(transaction);
     }
+
 }

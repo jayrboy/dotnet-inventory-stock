@@ -34,5 +34,12 @@ namespace inventoryProject.Models
 
             return result;
         }
+
+        //Search Action
+        // public static List<Transaction> Search(InventoryContext db, string keyword)
+        // {
+        //     List<Transaction> result = db.Transactions.Where(q => q.ProductId.Contains(keyword) || q.Lastname.Contains(keyword) && q.IsDelete != true).ToList();
+        //     return result;
+        // }
     }
 }

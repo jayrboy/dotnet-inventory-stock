@@ -30,7 +30,7 @@ namespace inventoryProject.Models
         //Get All Action
         public static List<Product> GetAll(InventoryContext db)
         {
-            List<Product> result = db.Products.Where(q => q.IsDeleted != true).ToList();
+            List<Product> result = db.Products.Include(p => p.Category).Where(q => q.IsDeleted != true).ToList();
             return result;
         }
 
