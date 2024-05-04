@@ -61,4 +61,15 @@ public class TransactionController : ControllerBase
         return Ok(transaction);
     }
 
+    //Get All By Page
+    [HttpGet("page/{page}", Name = "GetAllTransactionByPage")]
+    public ActionResult GetAllTransactionByPage(int page)
+    {
+        int pageSize = 10;
+        List<Transaction> transaction = Transaction.GetAll(_db).OrderByDescending(q => q.Id).Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+        return Ok(transaction);
+
+    }
+
 }
